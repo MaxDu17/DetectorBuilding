@@ -1,6 +1,6 @@
-#define REDPIN 13;
-#define GREENPIN 12;
-#define BLUEPIN 11;  
+#define REDPIN 13
+#define GREENPIN 12
+#define BLUEPIN 11
 void setup() {
   Serial.begin(9600);
   pinMode(A0, INPUT);
