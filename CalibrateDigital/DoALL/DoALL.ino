@@ -18,7 +18,7 @@ void setup(void)
   String status_  = ""; 
   while(status_ != "go")
   {
-    Serial.out.println("ready");
+    Serial.println("ready");
     status_ = Serial.read(); 
   }
   
@@ -26,6 +26,8 @@ void setup(void)
 
 void loop(void) 
 { 
+ Serial.println(Serial.read()); 
+ /*
  sensors.requestTemperatures(); // Send the command to get temperature readings 
  for(int i = 0; i < 5; i ++)
  {
@@ -39,5 +41,5 @@ void loop(void)
   // You can have more than one DS18B20 on the same bus.  
   // 0 refers to the first IC on the wire 
    delay(1000); 
-  
+  */
 }
