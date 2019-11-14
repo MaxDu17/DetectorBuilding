@@ -15,31 +15,38 @@ void setup(void)
   Serial.begin(9600); 
   sensors.begin(); 
   pinMode(A0, INPUT);
+  /*
   String status_  = ""; 
   while(status_ != "go")
   {
     Serial.println("ready");
     status_ = Serial.read(); 
   }
+  */
   
 } 
 
 void loop(void) 
 { 
- Serial.println(Serial.read()); 
- /*
  sensors.requestTemperatures(); // Send the command to get temperature readings 
  for(int i = 0; i < 5; i ++)
  {
   calibrated[i] = sensors.getTempCByIndex(i);
-  avg += sensors.getTempCByIndex(i)
+  avg += sensors.getTempCByIndex(i);
+  if(calibrated[i] == -127)
+  {
+    Serial.println("pullup");
+  }
  }
  avg = avg/5;
  raw = analogRead(A0);
- Serial.out.println(avg + "\n" + raw); 
+ //Serial.print("This is the average"); 
+ String rawS = String(raw);  
+ Serial.println(rawS + "&" + avg); 
+ 
   // Why "byIndex"?  
   // You can have more than one DS18B20 on the same bus.  
   // 0 refers to the first IC on the wire 
-   delay(1000); 
-  */
+  avg = 0; 
+  
 }
