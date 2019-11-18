@@ -22,8 +22,8 @@ void setup(void)
     Serial.println("ready");
     status_ = Serial.read(); 
   }
-  */
   
+  */
 } 
 
 void loop(void) 
