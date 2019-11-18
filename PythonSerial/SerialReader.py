@@ -3,7 +3,7 @@ import serial
 import csv
 ser = serial.Serial(port='COM4', baudrate=9600)
 
-k = open("calibration.csv", "w")
+k = open("calibration_cold.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
 
 for i in range(5000):
