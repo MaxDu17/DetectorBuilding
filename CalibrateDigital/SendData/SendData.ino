@@ -15,7 +15,7 @@ void setup(void)
   Serial.begin(9600); 
   sensors.begin(); 
   pinMode(A0, INPUT);
-  /*
+  
   String status_  = ""; 
   while(status_ != "go")
   {
