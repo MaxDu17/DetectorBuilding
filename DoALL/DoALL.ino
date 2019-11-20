@@ -8,7 +8,6 @@ String in;
 void setup(void) 
 { 
   Serial.begin(9600); 
-  sensors.begin(); 
   pinMode(A0, INPUT);
   
   String status_  = ""; 
@@ -17,7 +16,7 @@ void setup(void)
     Serial.println("ready");
     status_ = Serial.read(); 
   }
-  
+  Serial.println("RECEIVED HANDSHAKE");
 } 
 
 void loop(void) 
