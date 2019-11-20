@@ -1,9 +1,8 @@
-
+import pickle
 import serial
 import csv
 from Model import Model
 
-#NOTE MAKE CSV PARSER
 myModel = Model()
 valuedict = { #note: add 7 to the original value to get the lower bound
     1: -1, #R_low
@@ -33,25 +32,31 @@ translationdict = {
 
 }
 print("-----------SETUP------------")
-for i in range(1, 8):
-    valuedict[i] = int(input(translationdict[i] + "_low?"))
-    valuedict[i+7] = int(input(translationdict[i] + "_high?"))
+status = input("load from previous? (y, n)")
+if(status == "y"):
+    try:
+        valuedict = pickle.load(open("RANGES.pkl", "rb"))
+    except:
+        print("whoops, you might not have made a file!")
+        quit()
 
-
+else:
+    for i in range(1, 8):
+        valuedict[i] = int(input(translationdict[i] + "_low?"))
+        valuedict[i+7] = int(input(translationdict[i] + "_high?"))
+        status = input("save for later? (y, n)")
+        if(status == "y"):
+            pickle.dump( valuedict, open( "RANGES.pkl", "wb" ) )
 
 
 ser = serial.Serial(port='COM4', baudrate=9600)
 semantic = "no"
 while semantic != "ready":
-    semantic = str(ser.readline())
-    semantic = semantic.replace("b'", '')
-    semantic = semantic.replace("\\r\\n'", '')
+    semantic = myModel.parseSerial(ser.readline())
 print("RECEIVED HANDSHAKE")
 ser.write('go'.encode('utf-8'))
 while semantic != "RECEIVED HANDSHAKE":
-    semantic = str(ser.readline())
-    semantic = semantic.replace("b'", '')
-    semantic = semantic.replace("\\r\\n'", '')
+    semantic = myModel.parseSerial(ser.readline())
 print("SUCCESSFUL PAIRING")
 
 sendstatus = "OFF"
@@ -59,9 +64,7 @@ laststatus = "OFF"
 change = False
 while True:
     try:
-        s = str(ser.readline())
-        s = s.replace("b'", '')
-        s = s.replace("\\r\\n'", '')
+        s = myModel.parseSerial(ser.readline())
         value = int(s)
         voltage = myModel.toVoltage(value)
         temperature = myModel.voltageToTemp((voltage))
@@ -72,15 +75,15 @@ while True:
             print("awaiting color change protocol")
             semantic = "no"
             while semantic != "Successful":
-                semantic = str(ser.readline())
-                semantic = semantic.replace("b'", '')
-                semantic = semantic.replace("\\r\\n'", '')
+                semantic = myModel.parseSerial(ser.readline())
             change = False
 
 
         for i in range(1,8):
             lowerbound = valuedict[i]
             higherbound = valuedict[i + 7]
+            if(lowerbound  == -1 or higherbound == -1):
+                continue
 
             if temperature > lowerbound and temperature < higherbound:
                 carrier = translationdict[i]
@@ -88,11 +91,8 @@ while True:
                     sendstatus = carrier
                     change = True
 
-
-
-
     except:
-        print("small serial error")
+        print("small serial error") #error correction
 
 
 
