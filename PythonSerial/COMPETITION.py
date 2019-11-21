@@ -2,7 +2,7 @@ import pickle
 import serial
 import csv
 from Model import Model
-
+import time
 myModel = Model()
 valuedict = { #note: add 7 to the original value to get the lower bound
     1: -1, #R_low
@@ -32,7 +32,7 @@ translationdict = {
 
 }
 print("-----------SETUP------------")
-status = input("load from previous? (y, n)")
+status = input("load from previous? (y, n, s)")
 if(status == "y"):
     try:
         valuedict = pickle.load(open("RANGES.pkl", "rb"))
@@ -40,7 +40,7 @@ if(status == "y"):
         print("whoops, you might not have made a file!")
         quit()
 
-else:
+elif(status == "n"):
     for i in range(1, 8):
         valuedict[i] = int(input(translationdict[i] + "_low?"))
         valuedict[i+7] = int(input(translationdict[i] + "_high?"))
@@ -62,37 +62,38 @@ print("SUCCESSFUL PAIRING")
 sendstatus = "OFF"
 laststatus = "OFF"
 change = False
+count = 0
 while True:
-    try:
-        s = myModel.parseSerial(ser.readline())
-        value = int(s)
-        voltage = myModel.toVoltage(value)
-        temperature = myModel.voltageToTemp((voltage))
-        print("The voltage is: " + voltage + "V. The calculated temperature is: " + temperature + " degrees Celsius")
 
-        if(change):
-            ser.write(sendstatus.encode('utf-8'))
-            print("awaiting color change protocol")
-            semantic = "no"
-            while semantic != "Successful":
-                semantic = myModel.parseSerial(ser.readline())
-            change = False
+    s = myModel.parseSerial(ser.readline())
+    value = int(s)
+    voltage = myModel.toVoltage(value)
+    temperature = myModel.voltageToTemp((voltage))
+    count++
+    if(count % 10 == 0):
+        print("The voltage is: " + str(round(voltage,2)) + "V. The calculated temperature is: " + str(round(temperature,2)) + " degrees Celsius")
+
+    if(change):
+        ser.write(sendstatus.encode('utf-8'))
+        print("awaiting color change protocol")
+        semantic = "no"
+        while semantic != "Successful":
+            semantic = myModel.parseSerial(ser.readline())
+        change = False
 
 
-        for i in range(1,8):
-            lowerbound = valuedict[i]
-            higherbound = valuedict[i + 7]
-            if(lowerbound  == -1 or higherbound == -1):
-                continue
+    for i in range(1,8):
+        lowerbound = valuedict[i]
+        higherbound = valuedict[i + 7]
+        if(lowerbound  == -1 or higherbound == -1):
+            continue
 
-            if temperature > lowerbound and temperature < higherbound:
-                carrier = translationdict[i]
-                if(carrier != laststatus):
-                    sendstatus = carrier
-                    change = True
+        if temperature > lowerbound and temperature < higherbound:
+            carrier = translationdict[i]
+            if(carrier != laststatus):
+                sendstatus = carrier
+                change = True
 
-    except:
-        print("small serial error") #error correction
 
 
 
