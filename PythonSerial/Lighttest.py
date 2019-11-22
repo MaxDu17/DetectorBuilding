@@ -33,7 +33,7 @@ count = 0
 while True:
     command = input("your command")
 
-    ser.write(sendstatus.encode('utf-8'))
+    ser.write(command.encode('utf-8'))
     print("awaiting color change protocol")
     semantic = "no"
     while semantic != "Successful":

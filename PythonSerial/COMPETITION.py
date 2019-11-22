@@ -69,7 +69,7 @@ while True:
     value = int(s)
     voltage = myModel.toVoltage(value)
     temperature = myModel.voltageToTemp((voltage))
-    count++
+    count+=1
     if(count % 10 == 0):
         print("The voltage is: " + str(round(voltage,2)) + "V. The calculated temperature is: " + str(round(temperature,2)) + " degrees Celsius")
 
