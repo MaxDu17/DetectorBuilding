@@ -34,21 +34,21 @@ void loop(void)
     digitalWrite(REDPIN, HIGH);
     digitalWrite(GREENPIN, LOW);
     digitalWrite(BLUEPIN, LOW);
-    Serial.println("Successful");
+   
  }
  else if(in.equals("G"))
  {
   digitalWrite(REDPIN, LOW);
     digitalWrite(GREENPIN, HIGH);
     digitalWrite(BLUEPIN, LOW);
-    Serial.println("Successful");
+    
  }
   else if(in.equals("B"))
  {
  digitalWrite(REDPIN, LOW);
     digitalWrite(GREENPIN, LOW);
     digitalWrite(BLUEPIN, HIGH);
-    Serial.println("Successful");
+    
  }
 
   else if(in.equals("RG"))
@@ -56,35 +56,35 @@ void loop(void)
 digitalWrite(REDPIN, HIGH);
     digitalWrite(GREENPIN, HIGH);
     digitalWrite(BLUEPIN, LOW);
-    Serial.println("Successful");
+    
   }
     else if(in.equals("RB"))
   {
   digitalWrite(REDPIN, HIGH);
     digitalWrite(GREENPIN, LOW);
     digitalWrite(BLUEPIN, HIGH);
-    Serial.println("Successful");
+   
   }
     else if(in.equals("BG"))
   {
  digitalWrite(REDPIN, LOW);
     digitalWrite(GREENPIN, HIGH);
     digitalWrite(BLUEPIN, HIGH);
-    Serial.println("Successful");
+   
   }
       else if(in.equals("RGB"))
   {
   digitalWrite(REDPIN, HIGH);
     digitalWrite(GREENPIN, HIGH);
     digitalWrite(BLUEPIN, HIGH);
-    Serial.println("Successful");
+   
   }
      else if(in.equals("OFF"))
   {
   digitalWrite(REDPIN, LOW);
     digitalWrite(GREENPIN, LOW);
     digitalWrite(BLUEPIN, LOW);
-    Serial.println("Successful");
+   
   }
 
  

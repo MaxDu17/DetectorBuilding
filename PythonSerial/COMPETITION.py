@@ -42,14 +42,18 @@ if(status == "y"):
 
 elif(status == "n"):
     for i in range(1, 8):
-        valuedict[i] = int(input(translationdict[i] + "_low?"))
-        valuedict[i+7] = int(input(translationdict[i] + "_high?"))
-        status = input("save for later? (y, n)")
-        if(status == "y"):
-            pickle.dump( valuedict, open( "RANGES.pkl", "wb" ) )
+        valuedict[i] = float(input(translationdict[i] + "_low?"))
+        valuedict[i+7] = float(input(translationdict[i] + "_high?"))
+    status = input("save for later? (y, n)")
+    if(status == "y"):
+        pickle.dump( valuedict, open( "RANGES.pkl", "wb" ) )
 
+try:
+    ser = serial.Serial(port='COM4', baudrate=9600)
+except:
+    print("sorry, this port is busy or not correct. double check programs!")
+    quit()
 
-ser = serial.Serial(port='COM4', baudrate=9600)
 semantic = "no"
 while semantic != "ready":
     semantic = myModel.parseSerial(ser.readline())
@@ -69,16 +73,12 @@ while True:
     value = int(s)
     voltage = myModel.toVoltage(value)
     temperature = myModel.voltageToTemp((voltage))
-    count+=1
-    if(count % 10 == 0):
-        print("The voltage is: " + str(round(voltage,2)) + "V. The calculated temperature is: " + str(round(temperature,2)) + " degrees Celsius")
+
+    print("The voltage is: " + str(round(voltage,2)) + "V. The calculated temperature is: " + str(round(temperature,2)) + " degrees Celsius")
 
     if(change):
+        print("\tswitching color to: " + sendstatus)
         ser.write(sendstatus.encode('utf-8'))
-        print("awaiting color change protocol")
-        semantic = "no"
-        while semantic != "Successful":
-            semantic = myModel.parseSerial(ser.readline())
         change = False
 
 
@@ -92,6 +92,7 @@ while True:
             carrier = translationdict[i]
             if(carrier != laststatus):
                 sendstatus = carrier
+                laststatus = carrier
                 change = True
 
 
