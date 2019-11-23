@@ -3,6 +3,7 @@ import serial
 import csv
 from Model import Model
 import time
+from serial.tools import list_ports
 
 myModel = Model()
 valuedict = {  # note: add 7 to the original value to get the lower bound
@@ -50,9 +51,12 @@ elif (status == "n"):
         pickle.dump(valuedict, open("RANGES.pkl", "wb"))
 
 try:
-    ser = serial.Serial(port='COM4', baudrate=9600)
+    #ser = serial.Serial(port='COM4', baudrate=9600)
+    ser = serial.Serial(port='COM6', baudrate=9600)
 except:
     print("sorry, this port is busy or not correct. double check programs!")
+    ports = list(list_ports.comports())
+    print("here are the available ports: " + str([k.device for k in ports]))
     quit()
 
 semantic = "no"

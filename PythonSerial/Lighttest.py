@@ -17,7 +17,7 @@ translationdict = {
 }
 
 
-ser = serial.Serial(port='COM4', baudrate=9600)
+ser = serial.Serial(port='COM6', baudrate=9600)
 semantic = "no"
 while semantic != "ready":
     semantic = myModel.parseSerial(ser.readline())
@@ -34,10 +34,6 @@ while True:
     command = input("your command")
 
     ser.write(command.encode('utf-8'))
-    print("awaiting color change protocol")
-    semantic = "no"
-    while semantic != "Successful":
-        semantic = myModel.parseSerial(ser.readline())
 
 
 

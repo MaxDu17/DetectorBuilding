@@ -2,13 +2,18 @@
 #define REDPIN 13
 #define GREENPIN 12
 #define BLUEPIN 11
-String raw;
+int raw;
 String in;
 
 void setup(void) 
 { 
   Serial.begin(9600); 
   pinMode(A0, INPUT);
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+  pinMode(A3, INPUT);
+  pinMode(A4, INPUT);
+  pinMode(A5, INPUT);
   pinMode(REDPIN, OUTPUT);
   pinMode(GREENPIN, OUTPUT);
   pinMode(BLUEPIN, OUTPUT); 
@@ -25,6 +30,12 @@ void setup(void)
 void loop(void) 
 { 
  raw = analogRead(A0);
+ raw += analogRead(A1); 
+ raw += analogRead(A2); 
+ raw += analogRead(A3); 
+ raw += analogRead(A4); 
+ raw += analogRead(A5); 
+ raw /=6; 
  String rawS = String(raw);  
  Serial.println(rawS);
  in = Serial.readString();
