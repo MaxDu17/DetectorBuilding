@@ -15,7 +15,11 @@ void setup(void)
   Serial.begin(9600); 
   sensors.begin(); 
   pinMode(A0, INPUT);
-  
+  pinMode(A1, INPUT);
+  pinMode(A2, INPUT);
+  pinMode(A3, INPUT);
+  pinMode(A4, INPUT);
+  pinMode(A5, INPUT);
   String status_  = ""; 
   while(status_ != "go")
   {
@@ -39,14 +43,18 @@ void loop(void)
   }
  }
  avg = avg/5;
+
+ 
  raw = analogRead(A0);
- //Serial.print("This is the average"); 
+ raw += analogRead(A1); 
+ raw += analogRead(A2); 
+ raw += analogRead(A3); 
+ raw += analogRead(A4); 
+ raw += analogRead(A5); 
+ raw /=6; 
+
  String rawS = String(raw);  
  Serial.println(rawS + "&" + avg); 
- 
-  // Why "byIndex"?  
-  // You can have more than one DS18B20 on the same bus.  
-  // 0 refers to the first IC on the wire 
   avg = 0; 
   
 }
