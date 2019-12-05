@@ -142,7 +142,7 @@ def getSample(number, threshold):
             break #this prevents bogus values from holding up the code
 
 
-    return total/number, totalv/number
+    return (total/number + BIAS), totalv/number
 
 
 
@@ -162,6 +162,7 @@ def main():
         if semantic == "c":
             ser.reset_input_buffer()
             voltage, temperature = calculateVandT()
+            temperature = temperature + BIAS
             print("The voltage is: " + str(round(voltage,2)) + "V. The calculated temperature is: " + str(round(temperature,2)) + " degrees Celsius")
             laststatus = checkLights(temperature, laststatus)
 
