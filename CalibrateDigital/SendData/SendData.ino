@@ -20,14 +20,8 @@ void setup(void)
   pinMode(A3, INPUT);
   pinMode(A4, INPUT);
   pinMode(A5, INPUT);
-  String status_  = ""; 
-  while(status_ != "go")
-  {
-    Serial.println("ready");
-    status_ = Serial.read(); 
-  }
   
-  */
+  
 } 
 
 void loop(void) 

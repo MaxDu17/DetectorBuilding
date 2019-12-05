@@ -5,9 +5,9 @@ ser = serial.Serial(port='COM4', baudrate=9600)
 
 k = open("FmInviteCali.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
-b = 0
+temp = 0.0
 counter = 0
-while b < 95:
+while temp < 95:
     try:
         s = str(ser.readline())
         s = s.replace("b'", '')
@@ -15,6 +15,7 @@ while b < 95:
         a, b = s.split("&")
         dataWriter.writerow([a, b])
         print(str(counter) + "\t" + a + "\t" + b)
+        temp = float(b)
         counter +=1
     except:
         print("SERIAL ERROR, SKIPPING THIS POINT")
