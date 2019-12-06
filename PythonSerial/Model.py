@@ -29,8 +29,8 @@ class Model:
         k_1 = 0.13303
         #the above are for use in resistances GREATER than the threshold
 
-        b_2 =3531.83942
-        k_2 =0.07230
+        b_2 =3524.56114
+        k_2 =0.07387
         if(resistance > self.transitionresis):
             answer = self.regressModel(resistance, b_1, k_1)
         else:
