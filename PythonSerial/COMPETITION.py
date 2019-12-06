@@ -100,7 +100,8 @@ def calculateVandT():
     s = myModel.parseSerial(ser.readline())
     value = int(s)
     voltage = myModel.toVoltage(value)
-    temperature = myModel.voltageToTemp((voltage))
+    resistance = myModel.toResistance(voltage)
+    temperature = myModel.resisToTemp(resistance)
     return voltage, temperature
 
 def checkLights(temperature, laststatus):
