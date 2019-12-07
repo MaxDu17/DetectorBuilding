@@ -7,7 +7,7 @@ k = open("FmInviteCali.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
 temp = 0.0
 counter = 0
-while temp < 95:
+while temp < 90:
     try:
         s = str(ser.readline())
         s = s.replace("b'", '')
