@@ -25,14 +25,17 @@ class Model:
 
     def resisToTemp(self, resistance):
 
-        third = -4.69025551730340000000E-09
-        second = 4.63543381558865000000E-06
-        first = 2.14112850892514000000E-04
-        constant = 1.00219715468020000000E-03
+        b_1 = 3336.73016
+        k_1 = 0.13303
+        #the above are for use in resistances GREATER than the threshold
 
-        recip = third * (resistance ** 3) + second * (resistance ** 2) + first * (resistance) + constant
-        kelvin = 1/recip
-        answer = kelvin - 273.15
+        b_2 =3524.56114
+        k_2 =0.07387
+        if(resistance > self.transitionresis):
+            answer = self.regressModel(resistance, b_1, k_1)
+        else:
+            answer = self.regressModel(resistance, b_2, k_2)
+
         return answer
 
 
