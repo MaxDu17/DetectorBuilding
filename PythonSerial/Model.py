@@ -30,7 +30,7 @@ class Model:
         first = 2.14112850892514000000E-04
         constant = 1.00219715468020000000E-03
 
-        recip = third * (resistance ** 3) + second * (resistance ** 2) + first * (resistance) + constant
+        recip = third * (math.log(resistance) ** 3) + second * (math.log(resistance) ** 2) + first * (math.log(resistance)) + constant
         kelvin = 1/recip
         answer = kelvin - 273.15
         return answer
