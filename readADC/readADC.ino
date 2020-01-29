@@ -26,7 +26,7 @@ void setup()
   delay(1000);
   digitalWrite(ADCRST,LOW);
   delay(1000);
-  digitalWrite(ADCRST,HIGH);
+  digitalWrite(ADCRST,HIGH); //this will reset the chip
   delay(1000);
  
   Serial.begin(9600);
@@ -44,7 +44,7 @@ void MAX1416_SerialInit()//You can modify it for handle channels
   SPI.transfer(0xFF);
   SPI.transfer(0xFF);
 
-  digitalWrite(ss,HIGH); // Disable ADC SPI
+  digitalWrite(ss,HIGH); // Disable ADC SPI. Whenever the CS is true, transmission happens. The input is !CS
 }
 
 void MAX1416_Config()//You can modify it for handle channels
@@ -163,7 +163,7 @@ void loop()
      
       //MAX1416_WaitForData_Soft() ;
       MAX1416_WaitForData_Hard() ;
-      delay(10);
+      delay(100);
       adcValue = MAX1416_ReadCH0Data();
       Serial.print("analog value =");
       Serial.print(adcValue);
