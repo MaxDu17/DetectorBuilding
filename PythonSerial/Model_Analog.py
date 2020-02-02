@@ -4,7 +4,7 @@ class Model:
     transitionresis = 5068
 
     def toVoltage(self, value):
-        answer = value * (5.0/65536.0)
+        answer = value * (5.0/1024.0)
         return answer
 
     def toResistance(self, value): # converts voltage to resistance
