@@ -1,6 +1,8 @@
 
 #include "SPI.h"
-
+#include <OneWire.h> 
+#include <DallasTemperature.h>
+#define ONE_WIRE_BUS 2 
 #define DRDY 9
 #define ADCRST 2
 #define SPICLOCK 13
@@ -8,14 +10,17 @@
 #define REDPIN 5
 #define GREENPIN 4
 #define BLUEPIN 3
-
+OneWire oneWire(ONE_WIRE_BUS); 
 int ss=8;
 unsigned int adcValue;
-String in; 
+float calibrated[5];
+double avg; 
+DallasTemperature sensors(&oneWire);
 
 void setup()
 {
   Serial.begin(9600); 
+  sensors.begin(); 
   delay(100);
   pinMode(ss, OUTPUT);
   pinMode(DRDY, INPUT);
@@ -29,15 +34,6 @@ void setup()
   SPI.setBitOrder(MSBFIRST);
   SPI.setDataMode(SPI_MODE3);
   SPI.setClockDivider(SPI_CLOCK_DIV16);
-
-  String status_  = ""; 
-  while(!status_.equals("go"))
-  {
-    Serial.println("ready");
-    status_ = Serial.readString(); 
-    status_.trim(); 
-  }
-  Serial.println("RECEIVED HANDSHAKE");
   
   digitalWrite(SPICLOCK,HIGH);
   digitalWrite(ADCRST,HIGH);
@@ -169,83 +165,29 @@ unsigned int MAX1416_ReadCH0Data() //You can modify it to read other channels
       return uiData;
 }
 
-void lights(String in)
-{
-  if(in.equals("R"))
- {
-    digitalWrite(REDPIN, HIGH);
-    digitalWrite(GREENPIN, LOW);
-    digitalWrite(BLUEPIN, LOW);
-   
- }
- else if(in.equals("G"))
- {
-  digitalWrite(REDPIN, LOW);
-    digitalWrite(GREENPIN, HIGH);
-    digitalWrite(BLUEPIN, LOW);
-    
- }
-  else if(in.equals("B"))
- {
- digitalWrite(REDPIN, LOW);
-    digitalWrite(GREENPIN, LOW);
-    digitalWrite(BLUEPIN, HIGH);
-    
- }
 
-  else if(in.equals("RG"))
-  {
-digitalWrite(REDPIN, HIGH);
-    digitalWrite(GREENPIN, HIGH);
-    digitalWrite(BLUEPIN, LOW);
-    
-  }
-    else if(in.equals("RB"))
-  {
-  digitalWrite(REDPIN, HIGH);
-    digitalWrite(GREENPIN, LOW);
-    digitalWrite(BLUEPIN, HIGH);
-   
-  }
-    else if(in.equals("BG"))
-  {
- digitalWrite(REDPIN, LOW);
-    digitalWrite(GREENPIN, HIGH);
-    digitalWrite(BLUEPIN, HIGH);
-   
-  }
-      else if(in.equals("RGB"))
-  {
-  digitalWrite(REDPIN, HIGH);
-    digitalWrite(GREENPIN, HIGH);
-    digitalWrite(BLUEPIN, HIGH);
-   
-  }
-     else if(in.equals("OFF"))
-  {
-  digitalWrite(REDPIN, LOW);
-    digitalWrite(GREENPIN, LOW);
-    digitalWrite(BLUEPIN, LOW);
-   
-  }
-}
 void loop()
 {
-  double volt;
       //MAX1416_WaitForData_Soft() ;
       MAX1416_WaitForData_Hard() ;
       delay(100);
       adcValue = MAX1416_ReadCH0Data();
       String rawValS = String(adcValue);
-      Serial.println(rawValS);
 
-      in = Serial.readString();
-      in.trim();
-      lights(in);
-      
-      
-      //volt=double(adcValue)*5/65535;
-      //Serial.println(volt,4);
+       sensors.requestTemperatures(); // Send the command to get temperature readings 
+       for(int i = 0; i < 5; i ++)
+       {
+        calibrated[i] = sensors.getTempCByIndex(i);
+        avg += sensors.getTempCByIndex(i);
+        if(calibrated[i] == -127)
+        {
+          Serial.println("pullup");
+        }
+       }
+       avg = avg/5;
+       Serial.println(rawValS + "&" + avg); 
+      avg = 0; 
+
   
 
 }
