@@ -1,7 +1,7 @@
 
 import serial
 import csv
-ser = serial.Serial(port='COM4', baudrate=9600)
+ser = serial.Serial(port='COM5', baudrate=9600)
 
 k = open("PrincetonCali.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
