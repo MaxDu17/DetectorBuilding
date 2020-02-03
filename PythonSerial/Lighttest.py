@@ -17,7 +17,7 @@ translationdict = {
 }
 
 
-ser = serial.Serial(port='COM6', baudrate=9600)
+ser = serial.Serial(port='COM4', baudrate=9600)
 semantic = "no"
 while semantic != "ready":
     semantic = myModel.parseSerial(ser.readline())
