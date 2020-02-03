@@ -3,7 +3,7 @@ import serial
 import csv
 ser = serial.Serial(port='COM4', baudrate=9600)
 
-k = open("FmInviteCali.csv", "w")
+k = open("PrincetonCali.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
 temp = 0.0
 counter = 0
