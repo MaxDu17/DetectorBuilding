@@ -1,27 +1,24 @@
 import math
 
+
 class Model:
-    transitionresis = 5068
+    r_bottom = 1500 + 120 + 120  # these are approximate values only
+    r_top = 2200
 
     def toVoltage(self, value):
         answer = value * (5.0/65536.0)
         return answer
 
     def toResistance(self, value): # converts voltage to resistance
-        resistor = 1196
-        volt = 5
-        num = value * resistor
-        denom = volt - value
-        resis = num / denom
+        source_voltage = 5.0
+        voltagedifference = value
+        non_var_side = source_voltage * self.r_top / (self.r_bottom + self.r_top)
+        absvoltage = non_var_side + voltagedifference
+
+        numerator = absvoltage * self.r_top
+        denomenator = source_voltage - absvoltage
+        resis = numerator / denomenator
         return resis
-
-    def regressModel(self, resistance, B, K): #this is a plug and chug
-        num = B
-        denom = math.log((resistance/K))
-        temp = num/denom
-        temp = temp - 273.15 #kelvin conversion
-        return temp
-
 
     def resisToTemp(self, resistance):
 
