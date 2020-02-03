@@ -12,7 +12,8 @@ class Model:
     def toResistance(self, value): # converts voltage to resistance
         source_voltage = 5.0
         voltagedifference = value
-        non_var_side = source_voltage * self.r_top / (self.r_bottom + self.r_top)
+        non_var_side = source_voltage * self.r_bottom / (self.r_bottom + self.r_top)
+
         absvoltage = non_var_side + voltagedifference
 
         numerator = absvoltage * self.r_top
