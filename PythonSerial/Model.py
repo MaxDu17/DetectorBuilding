@@ -22,10 +22,10 @@ class Model:
 
     def resisToTemp(self, resistance):
 
-        third = -4.69025551730340000000E-09
-        second = 4.63543381558865000000E-06
-        first = 2.14112850892514000000E-04
-        constant = 1.00219715468020000000E-03
+        third = -2.86036246840982000000E-06
+        second = 6.97198515460829000000E-05
+        first = -2.83654501267028000000E-04
+        constant = 2.26504661351262000000E-03
 
         recip = third * (math.log(resistance) ** 3) + second * (math.log(resistance) ** 2) + first * (math.log(resistance)) + constant
         kelvin = 1/recip
