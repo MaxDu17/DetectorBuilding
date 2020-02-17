@@ -11,7 +11,7 @@ def strip(data):
 
 ser = serial.Serial(port='COM5', baudrate=9600)
 
-k = open("UpennCali_2.csv", "w")
+k = open("UpennCali_3slow.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
 
 timeCount = 0
@@ -25,11 +25,11 @@ s = str(ser.readline())
 print(s)
 
 a, initialMillis = strip(s)
-nextMillis = initialMillis + 1000 #this is the lower bound of what to get
+nextMillis = initialMillis + 998 #this is the lower bound of what to get
 print(nextMillis)
 dataWriter.writerow([0, a])
 
-while timeCount <= 3600: #collect data for an hour
+while timeCount <= 7200: #collect data for an hour
     #try:
 
     #print(str(b) + " and " + str(nextMillis))
