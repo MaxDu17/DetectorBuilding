@@ -11,7 +11,7 @@ def strip(data):
 
 ser = serial.Serial(port='COM5', baudrate=9600)
 
-k = open("UpennCali.csv", "w")
+k = open("UpennCali_2.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
 
 timeCount = 0
@@ -41,7 +41,7 @@ while timeCount <= 3600: #collect data for an hour
             nextMillis += 1000 #we keep on incrementing one second
             timeCount += 1
             print(str(timeCount) + "\t" + a + "\t" + str(b) + "\tNext: " + str(nextMillis))
-            if (timeCount % 1000 == 0 and timeCount > 0):
+            if (timeCount % 100 == 0 and timeCount > 0):
                 k.flush()
                 print("flush successful")
 

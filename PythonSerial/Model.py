@@ -1,5 +1,5 @@
 import math
-import bigfloat
+
 
 class Model:
     r_bottom = 1500 + 120 + 120  # these are approximate values only
@@ -34,7 +34,7 @@ class Model:
         second = 9.12075584955964000000E-05
         first =  -5.14324430930260000000E-04
         constant = 3.06258591341827000000E-03
-
+        
 
         recip = third * (math.log(resistance) ** 3) + second * (math.log(resistance) ** 2) + first * (math.log(resistance)) + constant
         kelvin = 1/recip
