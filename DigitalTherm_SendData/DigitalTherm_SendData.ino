@@ -165,7 +165,7 @@ void loop()
       adcValue = MAX1416_ReadCH0Data();
       String rawValS = String(adcValue);
        Serial.println(rawValS + "&" + millis());
-       delay(100); 
+       delay(50); 
 
   
 
