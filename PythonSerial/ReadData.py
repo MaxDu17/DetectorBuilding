@@ -3,11 +3,11 @@ import serial
 import csv
 ser = serial.Serial(port='COM5', baudrate=9600)
 
-k = open("PrincetonCali.csv", "w")
+k = open("Pen5_new.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
 temp = 0.0
 counter = 0
-while temp < 90:
+while temp < 80:
     try:
         s = str(ser.readline())
         s = s.replace("b'", '')
