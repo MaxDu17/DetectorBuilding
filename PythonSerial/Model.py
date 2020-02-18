@@ -30,10 +30,10 @@ class Model:
         constant = 2.26504661351262000000E-03
         '''
 
-        third = -3.48120133103480000000E-06
-        second = 9.12075584955964000000E-05
-        first =  -5.14324430930260000000E-04
-        constant = 3.06258591341827000000E-03
+        third = -6.64239010284007000000E-06
+        second = 1.86913807558932000000E-04
+        first =  -1.47406999800322000000E-03
+        constant = 6.25577979515006000000E-03
         
 
         recip = third * (math.log(resistance) ** 3) + second * (math.log(resistance) ** 2) + first * (math.log(resistance)) + constant
