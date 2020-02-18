@@ -5,7 +5,7 @@ import time
 myModel = Model()
 from serial.tools import list_ports
 
-BIAS = 0
+BIAS = 0.5
 valuedict = { #note: add 7 to the original value to get the lower bound
     1: -1, #R_low
     2 : -1, #G_low

@@ -6,6 +6,7 @@ class Model:
     r_top = 2200
 
     def toVoltage(self, value):
+        print(value)
         answer = value * (5.0/65536.0)
         return answer
 
@@ -22,7 +23,7 @@ class Model:
         return resis
 
     def resisToTemp(self, resistance):
-        '''
+
         #this is the old model
         third = -2.86036246840982000000E-06
         second = 6.97198515460829000000E-05
@@ -34,7 +35,7 @@ class Model:
         second = 5.76062797366175000000E-05
         first =  -2.27344239612082000000E-04
         constant = 2.25414945110831000000E-03
-        
+        '''
 
         recip = third * (math.log(resistance) ** 3) + second * (math.log(resistance) ** 2) + first * (math.log(resistance)) + constant
         kelvin = 1/recip
