@@ -31,12 +31,11 @@ class Model:
         constant = 2.26504661351262000000E-03
         '''
 
-        third = -2.17716717980376000000E-06
-        second = 5.76062797366175000000E-05
-        first =  -2.27344239612082000000E-04
-        constant = 2.25414945110831000000E-03
+        third = -3.22199854863037000000E-06
+        second = 7.92105505973358000000E-05
+        first =  -3.64347333748712000000E-04
+        constant = 2.49006870817855000000E-03
         '''
-
         recip = third * (math.log(resistance) ** 3) + second * (math.log(resistance) ** 2) + first * (math.log(resistance)) + constant
         kelvin = 1/recip
         answer = kelvin - 273.15

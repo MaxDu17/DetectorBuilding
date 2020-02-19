@@ -5,7 +5,7 @@ import time
 myModel = Model()
 from serial.tools import list_ports
 
-BIAS = 0.5
+BIAS = 0
 valuedict = { #note: add 7 to the original value to get the lower bound
     1: -1, #R_low
     2 : -1, #G_low
@@ -159,8 +159,10 @@ def main():
     '''
 
     while True:
-        if counter % 20 == 0:
+        #if counter % 20 == 0:
+        if counter <-1:
             semantic = input("What do you want? Continuous (c), sample (s)")
+        semantic = "c"
         if semantic == "c":
             ser.reset_input_buffer()
             voltage, temperature = calculateVandT()
