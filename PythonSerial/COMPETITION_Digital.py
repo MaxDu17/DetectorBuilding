@@ -57,8 +57,8 @@ def setup():
             pickle.dump( valuedict, open( "RANGES.pkl", "wb" ) )
 
     try:
-        #ser = serial.Serial(port='COM5', baudrate=9600)
-        ser = serial.Serial(port='COM8', baudrate=9600)
+        ser = serial.Serial(port='COM5', baudrate=9600)
+        #ser = serial.Serial(port='COM8', baudrate=9600)
     except:
         print("sorry, this port is busy or not correct. double check programs!")
         ports = list(list_ports.comports())
