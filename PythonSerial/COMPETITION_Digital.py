@@ -6,6 +6,7 @@ myModel = Model()
 from serial.tools import list_ports
 
 BIAS = 0
+
 valuedict = { #note: add 7 to the original value to get the lower bound
     1: -1, #R_low
     2 : -1, #G_low
@@ -56,8 +57,8 @@ def setup():
             pickle.dump( valuedict, open( "RANGES.pkl", "wb" ) )
 
     try:
-        ser = serial.Serial(port='COM5', baudrate=9600)
-        #ser = serial.Serial(port='COM6', baudrate=9600)
+        #ser = serial.Serial(port='COM5', baudrate=9600)
+        ser = serial.Serial(port='COM8', baudrate=9600)
     except:
         print("sorry, this port is busy or not correct. double check programs!")
         ports = list(list_ports.comports())
@@ -97,7 +98,9 @@ def calibrate():
             print("calibration data discarded")
 
 def calculateVandT():
+    global succ
     s = myModel.parseSerial(ser.readline())
+
     value = int(s)
     voltage = myModel.toVoltage(value)
     resistance = myModel.toResistance(voltage)
@@ -105,6 +108,7 @@ def calculateVandT():
     return voltage, temperature
 
 def checkLights(temperature, laststatus):
+
     for i in range(1, 8):
         lowerbound = valuedict[i]  # this is just how we get low and high
         higherbound = valuedict[i + 7]
@@ -117,9 +121,12 @@ def checkLights(temperature, laststatus):
                 laststatus = carrier
                 print("\tswitching color to: " + carrier)
                 ser.write(carrier.encode('utf-8'))
+
+
     return laststatus
 
 def getSample(number, threshold):
+
     counter = 0
     total = 0
     totalv = 0
@@ -159,10 +166,8 @@ def main():
     '''
 
     while True:
-        #if counter % 20 == 0:
-        if counter <-1:
+        if counter % 20 == 0:
             semantic = input("What do you want? Continuous (c), sample (s)")
-        semantic = "c"
         if semantic == "c":
             ser.reset_input_buffer()
             voltage, temperature = calculateVandT()

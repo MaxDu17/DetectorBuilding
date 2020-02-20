@@ -24,18 +24,19 @@ class Model:
 
     def resisToTemp(self, resistance):
 
-        #this is the old model
         third = -2.86036246840982000000E-06
         second = 6.97198515460829000000E-05
         first = -2.83654501267028000000E-04
         constant = 2.26504661351262000000E-03
         '''
-
-        third = -3.22199854863037000000E-06
-        second = 7.92105505973358000000E-05
-        first =  -3.64347333748712000000E-04
-        constant = 2.49006870817855000000E-03
+        #not used right now
+        third = -3.09377938834121000000E-06
+        second = 7.59957169700599000000E-05
+        first =  -3.38040907667832000000E-04
+        constant = 2.41934979987930000000E-03
         '''
+
+
         recip = third * (math.log(resistance) ** 3) + second * (math.log(resistance) ** 2) + first * (math.log(resistance)) + constant
         kelvin = 1/recip
         answer = kelvin - 273.15
