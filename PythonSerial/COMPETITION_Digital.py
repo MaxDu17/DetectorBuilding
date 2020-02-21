@@ -166,8 +166,11 @@ def main():
     '''
 
     while True:
+        '''
         if counter % 20 == 0:
             semantic = input("What do you want? Continuous (c), sample (s)")
+        '''
+        semantic = "c"
         if semantic == "c":
             ser.reset_input_buffer()
             voltage, temperature = calculateVandT()
