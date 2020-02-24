@@ -42,10 +42,9 @@ class Model:
         answer = kelvin - 273.15
         return answer
 
-
-
-    def parseSerial(self, value):
+    def parseSerial(self, value): #for old
         semantic = str(value)
         semantic = semantic.replace("b'", '')
         semantic = semantic.replace("\\r\\n'", '')
         return semantic
+
