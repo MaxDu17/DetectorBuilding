@@ -9,6 +9,13 @@ class SerialLibrary():
         semantic = semantic.replace("\\r\\n'", '')
         return semantic
 
+    def read_and_parse(self, ser):
+        return self.parseSerial(ser.readline())
+
+    def read_and_parse_flush(self, ser):
+        ser.reset_input_buffer()
+        return self.parseSerial(ser.readline())
+
     def connect(self, portvalue = 'COM5'):
         try:
             ser = serial.Serial(port=portvalue, baudrate=9600)
