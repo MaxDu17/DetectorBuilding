@@ -48,7 +48,9 @@ class Model:
         return answer
 
     def raw_to_resistance(self, raw): #wrapper function
-        return self.toResistance(self.toVoltage(raw))
+        k = self.toResistance(self.toVoltage(raw))
+        print("resistance: {}".format(k))
+        return k
 
     def parseSerial(self, value): #for old
         semantic = str(value)

@@ -67,8 +67,11 @@ def calculateVandT(): #running
     s = serialHelp.read_and_parse(ser)
 
     value = int(s)
+    resistance = myModel.raw_to_resistance(value)
+
     voltage = myModel.toVoltage(value)
-    resistance = myModel.toResistance(voltage)
+    #resistance = myModel.toResistance(voltage)
+
     temperature = myModel.resisToTemp_v2(resistance, constant, first, third) #this is temporarily removed
     return voltage, temperature
 
@@ -122,6 +125,7 @@ def main():
         voltage, temperature = calculateVandT()
         temperature = temperature + BIAS
         print("The voltage is: " + str(round(voltage,5)) + "V. The calculated temperature is: " + str(round(temperature,2)) + " degrees Celsius")
+        print("c {}\t f {} \t t {}".format(constant, first, third))
         laststatus = checkLights(temperature, laststatus)
 
 
