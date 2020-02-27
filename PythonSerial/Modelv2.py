@@ -7,7 +7,7 @@ class Model:
 
     def toVoltage(self, value):
         print(value)
-        answer = value * (5.0/65536.0)
+        answer = float(value) * (5.0/65536.0)
         return answer
 
     def toResistance(self, value): # converts voltage to resistance
@@ -65,5 +65,5 @@ class Model:
         constant = x[0]
         first = x[1]
         third = x[2]
-
+        print("a: {}\nb: {}, solved: {}".format(a,b,x))
         return constant, first, third

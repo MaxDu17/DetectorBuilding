@@ -69,7 +69,7 @@ def calculateVandT(): #running
     value = int(s)
     voltage = myModel.toVoltage(value)
     resistance = myModel.toResistance(voltage)
-    temperature = myModel.resisToTemp(resistance) #this is temporarily removed
+    temperature = myModel.resisToTemp_v2(resistance, constant, first, third) #this is temporarily removed
     return voltage, temperature
 
 def checkLights(temperature, laststatus): #running
@@ -91,16 +91,26 @@ def checkLights(temperature, laststatus): #running
 def calibrate():
     THRESHOLD = 0.1
     global constant, first, third
+    status = input("load calibration from previous? (y, n, s)")
+    if (status == "y"):
+        try:
+            value = pickle.load(open("Cali.pkl", "rb"))
+            constant = value[0]
+            first = value [1]
+            third = value[2]
+        except:
+            print("whoops, you might not have made a file!")
+            quit()
+    else:
+        t1 = 273.15 + float(input("Temp 1?"))
+        r1 = myModel.raw_to_resistance(serialHelp.read_and_parse_flush(ser))
+        t2 = 273.15 + float(input("Temp 2?"))
+        r2 = myModel.raw_to_resistance(serialHelp.read_and_parse_flush(ser))
+        t3 = 273.15 + float(input("Temp 3?"))
+        r3 = myModel.raw_to_resistance(serialHelp.read_and_parse_flush(ser))
 
-    t1 = 273.15 + float(input("Temp 1?"))
-    r1 = myModel.raw_to_resistance(serialHelp.read_and_parse_flush(ser))
-    t2 = 273.15 + float(input("Temp 2?"))
-    r2 = myModel.raw_to_resistance(serialHelp.read_and_parse_flush(ser))
-    t3 = 273.15 + float(input("Temp 3?"))
-    r3 = myModel.raw_to_resistance(serialHelp.read_and_parse_flush(ser))
-
-    constant, first, third = myModel.solve(r1, t1, r2, t2, r3, t3)
-
+        constant, first, third = myModel.solve(r1, t1, r2, t2, r3, t3)
+        pickle.dump([constant, first, third], open( "Cali.pkl", "wb" ) )
 def main():
     laststatus = "OFF"
 
