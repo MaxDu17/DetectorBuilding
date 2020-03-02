@@ -3,7 +3,7 @@ import serial
 import csv
 ser = serial.Serial(port='COM5', baudrate=9600)
 
-k = open("Pen5_new.csv", "w")
+k = open("States1_new.csv", "w")
 dataWriter = csv.writer(k, lineterminator = "\n")
 temp = 0.0
 counter = 0
