@@ -23,11 +23,19 @@ class Model:
         return resis
 
     def resisToTemp(self, resistance):
+        third = -2.70539185771856000000E-06
+        second = 6.60086236619423000000E-05
+        first = -2.53817749918175000000E-04
+        constant = 2.18681334419397000000E-03
 
+        '''
+        #not used right now
         third = -2.86036246840982000000E-06
         second = 6.97198515460829000000E-05
         first = -2.83654501267028000000E-04
         constant = 2.26504661351262000000E-03
+        '''
+
         '''
         #not used right now
         third = -3.09377938834121000000E-06
